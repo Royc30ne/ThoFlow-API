@@ -1,35 +1,31 @@
 from pydantic import BaseModel
 
-
-class ItemBase(BaseModel):
+class RssContentBase(BaseModel):
     title: str
-    description: str | None = None
+    content: str
 
-
-class ItemCreate(ItemBase):
+class RssContentCreate(RssContentBase):
     pass
 
-
-class Item(ItemBase):
+class RssContent(RssContentBase):
     id: int
     owner_id: int
-
+    
     class Config:
         orm_mode = True
 
-
-class UserBase(BaseModel):
+class RssBase(BaseModel):
+    title: str
     email: str
+    rss_address: str
+    description: str
 
-
-class UserCreate(UserBase):
-    password: str
-
-
-class User(UserBase):
-    id: int
+class RssLinkAdd(RssBase):
+    pass
+    
+class RssLink(RssBase):
     is_active: bool
-    items: list[Item] = []
-
+    contents: list[RssContent] = []
+    
     class Config:
         orm_mode = True
